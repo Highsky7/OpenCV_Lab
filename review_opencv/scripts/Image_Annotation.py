@@ -25,13 +25,16 @@ cv2.circle(image_circle, (1024, 768), 500, (255, 0, 0), thickness=10, lineType=c
 plt.imshow(image_circle[:, :, ::-1])
 plt.show()
 image_text = image.copy()
-text = "The Beauty of Paris above the Eiffel Tower"
+# text = "The Beauty of Paris above the Eiffel Tower"
 fontScale = 2.0
 fontFace = cv2.FONT_HERSHEY_COMPLEX
 fontColor = (255, 0, 0)
 fontThickness = 5
 
-cv2.putText(image_text, text, (100, 100), fontFace, fontScale, fontColor, fontThickness, lineType=cv2.LINE_AA)
+cv2.putText(image_text, "The Beauty of Paris above the Eiffel Tower", (100, 100), fontFace, fontScale, fontColor, fontThickness, lineType=cv2.LINE_AA)
 
-plt.imshow(image_text[:, :, ::-1])
-plt.show()
+# plt.imshow(image_text[:, :, ::-1])
+# plt.show()
+cv2.imshow("Image with Text", image_text)
+cv2.waitKey(0) # wait for any key to be pressed
+cv2.destroyAllWindows() # if any key is pressed, close the window
