@@ -1,1 +1,0 @@
-print(img_background_bgr.shape)
