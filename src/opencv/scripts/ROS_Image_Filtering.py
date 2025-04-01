@@ -1,17 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import rospy
 import cv2
-import sys
 import numpy
 from sensor_msgs.msg import Image # Import ROS Image message
 from cv_bridge import CvBridge, CvBridgeError # Import CvBridge for conversion
 
 # --- Filter constants ---
 PREVIEW  = 0  # Preview Mode
-BLUR     = 1  # Blurring Filter
-FEATURES = 2  # Corner Feature Detector
+BLUR     = 1  # Blurring Filter(used to smoothing images that can be robust to noises from raw data)
+FEATURES = 2  # Corner Feature Detector(minDistance, maxCorners and qualityLevel(threshold = maxCorners*qualityLevel) is important)
 CANNY    = 3  # Canny Edge Detector
 
 # --- Global variables ---
@@ -21,7 +19,7 @@ win_name = "Camera Filters ROS"
 cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
 bridge = CvBridge() # Initialize CvBridge
 current_frame = None # Store the latest frame received from ROS
-alive = True # Controls the main display loop
+# alive = True # Controls the main display loop
 
 # --- Image Processing Callback ---
 def image_callback(ros_image):
@@ -54,7 +52,7 @@ def image_callback(ros_image):
         # Ensure frame is 8-bit single channel for Canny if needed,
         # but Canny often works directly on BGR (internally converts)
         # frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # Optional pre-conversion
-        result = cv2.Canny(frame, 80, 150) # (frame, lower threshold, upper threshold)
+        result = cv2.Canny(frame, 80, 150) # (frame, lower threshold, upper threshold) (if we set lower threshold much lower, allowing strong edges to be connected with weaker edges->get much connected edges)
     elif image_filter == BLUR:
         result = cv2.blur(frame, (13, 13)) # (frame, kernel size)
     elif image_filter == FEATURES:
@@ -79,14 +77,15 @@ if __name__ == '__main__':
 
     # --- Subscribe to the ROS topic ---
     # Replace '/camera/color/image_raw' if your topic name is different
-    topic_name = "/camera/color/image_raw"
+    topic_name = "/camera/color/image_raw/" # Example topic name
     image_sub = rospy.Subscriber(topic_name, Image, image_callback, queue_size=1)
     rospy.loginfo(f"Subscribed to {topic_name}")
 
     # --- Main Loop for Display and Keyboard Input ---
     # The callback handles image processing. This loop handles display and user interaction.
     try:
-        while alive and not rospy.is_shutdown():
+        # while alive and not rospy.is_shutdown():
+        while not rospy.is_shutdown():
             if current_frame is not None:
                 cv2.imshow(win_name, current_frame)
 
@@ -94,7 +93,7 @@ if __name__ == '__main__':
 
             if key == ord('q') or key == 27: # Quit on 'q' or ESC
                 rospy.loginfo("Shutdown requested.")
-                alive = False
+                # alive = False
                 break # Exit the loop immediately
             elif key == ord('c'):
                 rospy.loginfo("Filter changed to: CANNY")
