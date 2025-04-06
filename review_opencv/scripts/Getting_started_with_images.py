@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from zipfile import ZipFile
 from urllib.request import urlretrieve
 
-from IPython.display import Image
+# from IPython.display import Image
 
 # Image(filename="review_opencv/images/1.png")
 # carla_img = cv2.imread("review_opencv/images/1.png", 0)
@@ -18,7 +18,7 @@ from IPython.display import Image
 # plt.show()
 # plt.imshow(carla_img_small, cmap="gray")
 # plt.show()
-Image(filename="review_opencv/images/2.jpeg")
+# Image(filename="review_opencv/images/2.jpeg")
 taiwan_img = cv2.imread("review_opencv/images/2.jpeg", 1)
 # taiwan_img_small = cv2.resize(taiwan_img, (256, 160))
 # print("Image size (H, W, C) is", taiwan_img.shape) # img.shape is (H, W, C)
@@ -55,8 +55,13 @@ plt.subplot(144);plt.imshow(paris_img_rgb);plt.title("Original Image") # 4th pos
 plt.show()
 
 cv2.imwrite("review_opencv/images/3.jpeg", paris_img_bgr)
-Image(filename="review_opencv/images/3.jpeg")
+# Image(filename="review_opencv/images/3.jpeg")
 paris_img_bgr = cv2.imread("review_opencv/images/3.jpeg", 1)
 print("Img_bgr size (H, W, C) is", paris_img_bgr.shape) # img.shape is (H, W, C)
 paris_img_gry = cv2.imread("review_opencv/images/3.jpeg", 0)
 print("Img_gry size (H, W) is", paris_img_gry.shape)
+eiffel_img = cv2.imread("review_opencv/images/eiffel.png", 1)
+print(eiffel_img.shape)
+eiffel_img_resized = cv2.resize(eiffel_img, None, fx = 0.25, fy = 0.25, interpolation = cv2.INTER_AREA)
+cv2.imwrite("review_opencv/images/eiffel_resized.png", eiffel_img_resized)
+print(eiffel_img_resized.shape)

@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-from IPython.display import Image
+# from IPython.display import Image
 
 # taiwan_img = cv2.imread("review_opencv/images/2.jpeg", 0)
 # taiwan_img_small = cv2.resize(taiwan_img, (18, 18)) # resize 시 (W, H)순서
