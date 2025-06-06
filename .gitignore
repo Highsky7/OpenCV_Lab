@@ -233,4 +233,7 @@ qtcreator-*
 # Catkin custom files
 CATKIN_IGNORE
 
+# Pretrained models
+*.caffemodel
+
 # End of https://www.toptal.com/developers/gitignore/api/python,ros,opencv
